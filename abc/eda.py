@@ -20,8 +20,9 @@ st.set_page_config(**page_config)
 
 
 @st.cache_data
-def get_dataset(name='/dataset/abc.xlsx'):
-    data = pd.read_excel(name, sheet_name='Main DFR', engine='openpyxl')
+def get_dataset():
+    url = "https://github.com/thetnaingtunerp/Plotly_Streamlit/blob/master/abc/abc.xlsx?raw=true"
+    data = pd.read_excel(url, sheet_name='Main DFR', engine='openpyxl')
     # localdataset = pd.read_excel(abc.xlsx, sheet_name='Main DFR', engine='openpyxl')
     dataset = data.dropna(how='all')
     dataset['Filling Date'] = pd.to_datetime(dataset['Filling Date'], format='%d-%m-%Y')
