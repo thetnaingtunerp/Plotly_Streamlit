@@ -21,7 +21,7 @@ st.set_page_config(**page_config)
 
 @st.cache_data
 def get_dataset():
-    url = "https://github.com/thetnaingtunerp/Plotly_Streamlit/blob/master/abc/abc.xlsx?raw=true"
+    url = "https://github.com/thetnaingtunerp/Plotly_Streamlit/blob/c03c056263caf7c4e42d7ffa2c34e69ce559c9c0/abc/dataset/abc.xlsx?raw=true"
     data = pd.read_excel(url, sheet_name='Main DFR', engine='openpyxl')
     # localdataset = pd.read_excel(abc.xlsx, sheet_name='Main DFR', engine='openpyxl')
     dataset = data.dropna(how='all')
