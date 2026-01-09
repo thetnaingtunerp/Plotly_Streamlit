@@ -1,5 +1,7 @@
 import pandas as pd
 import streamlit as st
+import plotly.graph_objects as go
+import plotly.figure_factory as ff
 import os
 import warnings
 
@@ -17,7 +19,7 @@ st.set_page_config(**page_config)
         
 
 
-# @st.cache_data
+@st.cache_data
 def get_dataset(name='abc.xlsx'):
     data = pd.read_excel(name, sheet_name='Main DFR', engine='openpyxl')
     # localdataset = pd.read_excel(abc.xlsx, sheet_name='Main DFR', engine='openpyxl')
@@ -56,37 +58,39 @@ with year_selection:
 
 
 # st.title('Fueling Data Report')
-filter_fm = st.container()
+
 
 no_inform = st.container()
 home = st.container()
+trends = st.container()
 
 
 with home:
-    st.subheader('Fueling Data Report')
+    st.subheader('Hight CPH Report')
     data = get_dataset()
-    col1,col2 = st.columns(2)
-    with col1:
-        #filter data by anchor id
-        filtered_data = data[(data['Anchor ID'] == anchor_selection) & (data['Year'].isin(yselection))]
-        st.dataframe(filtered_data[['Team Leader','Filling Date','Filling Liters']])
-    with col2:
-        # bar chart 
-        st.bar_chart(data=filtered_data, x='Filling Date', y=['status','inform'], color=['#0000FF', '#FF0000'], )
+    filtered_data = data[(data['Anchor ID'] == anchor_selection) & (data['Year'].isin(yselection))]
+    status_high = filtered_data[filtered_data['status'] > 0.5]
+    st.dataframe(status_high[['Anchor ID','Team Leader','Filling Date','Filling Liters', 'status']])
+       
 
 
 with no_inform:
     col1,col2, col3 = st.columns(3)
     with col1:
-        st.subheader('No Inform Cases by Year')
+        st.subheader('No Inform Cases')
         no_inform_data = data[(data['inform'] == 1) &  (data['Year'].isin(yselection))]
         st.dataframe(no_inform_data[['Team Leader','Filling Date','Anchor ID','Filling Liters']])
 
     with col2:
-        st.subheader('CPH High list')
-        cph_high = data[(data['status'] > 0) &  (data['Year'].isin(yselection))]
-        st.dataframe(cph_high[['Team Leader','Filling Date','Anchor ID']])
+        st.subheader('CPH High')
+        cph_high = data[(data['status'] > 0.5) &  (data['Year'].isin(yselection))]
+        st.dataframe(cph_high[['Team Leader','Filling Date','Anchor ID', 'status']])
     with col3:
-        st.subheader('No Inform CPH High list')
+        st.subheader('No Inform CPH High')
         no_inform_cph_high = data[(data['inform'] == 1) & (data['status'] > 0) &  (data['Year'].isin(yselection))]
         st.dataframe(no_inform_cph_high[['Team Leader','Filling Date','Anchor ID']])
+
+with trends:
+    st.subheader('Trends Over Time')
+    
+    
