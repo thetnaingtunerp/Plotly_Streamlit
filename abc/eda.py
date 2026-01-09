@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
-import plotly.graph_objects as go
-import plotly.figure_factory as ff
+# import plotly.graph_objects as go
+# import plotly.figure_factory as ff
 import os
 import warnings
 
@@ -94,9 +94,9 @@ with trends:
     st.subheader('Trends Over Time')
     trend_data = data[(data['Anchor ID'] == anchor_selection) & (data['Year'].isin(yselection))]
     trend_data = trend_data.sort_values(by='Filling Date')
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=trend_data['Filling Date'], y=trend_data['status'], mode='lines+markers', name='CPH Status'))
-    fig.update_layout(title='CPH Status Over Time', xaxis_title='Filling Date', yaxis_title='CPH Status')
-    st.plotly_chart(fig, use_container_width=True)
+    # fig = go.Figure()
+    # fig.add_trace(go.Scatter(x=trend_data['Filling Date'], y=trend_data['status'], mode='lines+markers', name='CPH Status'))
+    # fig.update_layout(title='CPH Status Over Time', xaxis_title='Filling Date', yaxis_title='CPH Status')
+    # st.plotly_chart(fig, use_container_width=True)
     
     
