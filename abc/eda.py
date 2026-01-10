@@ -71,7 +71,7 @@ no_inform = st.container()
 with site_info:
     a,b,c,d = st.columns(4)
     with a:
-        st.metric('Total Filling Liters', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['Filling Liters'].sum():,.2f} L", "1.2",border=True)
+        st.metric('Normal CPH', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['Nominal '].sum():,.2f} L", "1.2",border=True)
     with b:
         st.metric('Total Filling Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}", border=True)
     with c:
