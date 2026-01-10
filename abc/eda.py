@@ -61,9 +61,18 @@ with year_selection:
 # st.title('Fueling Data Report')
 
 
-no_inform = st.container()
+
 home = st.container()
+site_info = st.container()
 trends = st.container()
+no_inform = st.container()
+
+with site_info:
+    a,b,c,d = st.columns(4)
+    with a:
+        st.metric('Total Filling Liters', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['Filling Liters'].sum():,.2f} L")
+    with b:
+        st.metric('Total Filling Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}")
 
 
 with home:
@@ -87,17 +96,17 @@ with no_inform:
         cph_high = data[(data['status'] > 0.5) &  (data['Year'].isin(yselection))]
         st.dataframe(cph_high[['Team Leader','Filling Date','Anchor ID', 'status']])
     with col3:
-        st.subheader('No Inform CPH High')
+        st.subheader('No Inform & CPH High')
         no_inform_cph_high = data[(data['inform'] == 1) & (data['status'] > 0) &  (data['Year'].isin(yselection))]
         st.dataframe(no_inform_cph_high[['Team Leader','Filling Date','Anchor ID']])
 
 with trends:
-    st.subheader('Trends Over Time')
+    st.subheader('Trends of CPH Status Over')
     trend_data = data[(data['Anchor ID'] == anchor_selection) & (data['Year'].isin(yselection))]
     trend_data = trend_data.sort_values(by='Filling Date')
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=trend_data['Filling Date'], y=trend_data['status'], mode='lines+markers', name='CPH Status'))
-    fig.update_layout(title='CPH Status Over Time', xaxis_title='Filling Date', yaxis_title='CPH Status')
+    fig.update_layout(title='CPH Status Over', xaxis_title='Filling Date', yaxis_title='CPH Status')
     st.plotly_chart(fig, use_container_width=True)
     
     
