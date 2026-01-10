@@ -69,11 +69,12 @@ trends = st.container()
 no_inform = st.container()
 
 with site_info:
+    st.subheader('Fuel Filling Summary')
     a,b,c,d = st.columns(4)
     with a:
-        st.metric('Normal CPH', f"100 L", "1.2",border=True)
+        st.metric('Normal CPH', f"100", "1.2",border=True)
     with b:
-        st.metric('Total Filling Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}", border=True)
+        st.metric('Last Filling L', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}", border=True)
     with c:
         st.metric('Average CPH Status', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['status'].mean():.2f}","-2.5", border=True)
     with d:
