@@ -62,8 +62,9 @@ with year_selection:
 
 
 
-home = st.container()
+
 site_info = st.container()
+home = st.container()
 trends = st.container()
 no_inform = st.container()
 
