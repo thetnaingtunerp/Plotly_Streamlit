@@ -71,7 +71,7 @@ no_inform = st.container()
 with site_info:
     a,b,c,d = st.columns(4)
     with a:
-        st.metric('Normal CPH', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['Nominal '].sum():,.2f} L", "1.2",border=True)
+        st.metric('Normal CPH', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['Nominal '].avg():,.2f} L", "1.2",border=True)
     with b:
         st.metric('Total Filling Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}", border=True)
     with c:
@@ -93,16 +93,16 @@ with no_inform:
     col1,col2, col3 = st.columns(3)
     with col1:
         st.subheader('No Inform Cases')
-        no_inform_data = data[(data['inform'] == 1) &  (data['Year'].isin(yselection))]
+        no_inform_data = data[(data['inform'] == 1) &  (data['Year'].isin(yselection)) &(data['Anchor ID'] == anchor_selection)]
         st.dataframe(no_inform_data[['Team Leader','Filling Date','Anchor ID','Filling Liters']])
 
     with col2:
         st.subheader('CPH High')
-        cph_high = data[(data['status'] > 0.5) &  (data['Year'].isin(yselection))]
+        cph_high = data[(data['status'] > 0.5) &  (data['Year'].isin(yselection)) & (data['Anchor ID'] == anchor_selection)]
         st.dataframe(cph_high[['Team Leader','Filling Date','Anchor ID', 'status']])
     with col3:
         st.subheader('No Inform & CPH High')
-        no_inform_cph_high = data[(data['inform'] == 1) & (data['status'] > 0) &  (data['Year'].isin(yselection))]
+        no_inform_cph_high = data[(data['inform'] == 1) & (data['status'] > 0) &  (data['Year'].isin(yselection)) & (data['Anchor ID'] == anchor_selection)]
         st.dataframe(no_inform_cph_high[['Team Leader','Filling Date','Anchor ID']])
 
 with trends:
