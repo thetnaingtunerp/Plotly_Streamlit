@@ -75,7 +75,7 @@ with site_info:
     with b:
         st.metric('Total Filling Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}", border=True)
     with c:
-        st.metric('Average CPH Status', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['status'].mean():.2f}", border=True)
+        st.metric('Average CPH Status', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['status'].mean():.2f}","-2.5", border=True)
     with d:
         st.metric('No Inform Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['inform'] == 1) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}", border=True)
 
