@@ -71,13 +71,13 @@ no_inform = st.container()
 with site_info:
     a,b,c,d = st.columns(4)
     with a:
-        st.metric('Total Filling Liters', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['Filling Liters'].sum():,.2f} L")
+        st.metric('Total Filling Liters', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['Filling Liters'].sum():,.2f} L", border=True)
     with b:
-        st.metric('Total Filling Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}")
+        st.metric('Total Filling Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}", border=True)
     with c:
-        st.metric('Average CPH Status', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['status'].mean():.2f}")
+        st.metric('Average CPH Status', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['status'].mean():.2f}", border=True)
     with d:
-        st.metric('No Inform Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['inform'] == 1) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}")
+        st.metric('No Inform Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['inform'] == 1) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}", border=True)
 
 
 with home:
