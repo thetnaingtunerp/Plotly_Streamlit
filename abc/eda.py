@@ -93,16 +93,16 @@ with no_inform:
     col1,col2, col3 = st.columns(3)
     with col1:
         st.subheader('No Inform Cases')
-        no_inform_data = data[(data['inform'] == 1) &  (data['Year'].isin(yselection)) &(data['Anchor ID'] == anchor_selection)]
+        no_inform_data = data[(data['inform'] == 1) &  (data['Year'].isin(yselection))]
         st.dataframe(no_inform_data[['Team Leader','Filling Date','Anchor ID','Filling Liters']])
 
     with col2:
         st.subheader('CPH High')
-        cph_high = data[(data['status'] > 0.5) &  (data['Year'].isin(yselection)) & (data['Anchor ID'] == anchor_selection)]
+        cph_high = data[(data['status'] > 0.5) &  (data['Year'].isin(yselection)) ]
         st.dataframe(cph_high[['Team Leader','Filling Date','Anchor ID', 'status']])
     with col3:
         st.subheader('No Inform & CPH High')
-        no_inform_cph_high = data[(data['inform'] == 1) & (data['status'] > 0) &  (data['Year'].isin(yselection)) & (data['Anchor ID'] == anchor_selection)]
+        no_inform_cph_high = data[(data['inform'] == 1) & (data['status'] > 0) &  (data['Year'].isin(yselection)) ]
         st.dataframe(no_inform_cph_high[['Team Leader','Filling Date','Anchor ID']])
 
 with trends:
