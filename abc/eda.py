@@ -32,17 +32,6 @@ def get_dataset():
     return dataset
 
 
-# Create form
-# with st.form(key="data_form"):
-#     name = st.text_input("Copy and Pate Data URL")
-#     submit_btn = st.form_submit_button("Submit")
-
-# if submit_btn:
-#     if not name:
-#         st.error("not fields are filled!")
-#     else:
-#         get_dataset(name)
-
 
 #Sidebar
 
@@ -64,34 +53,44 @@ with year_selection:
 
 
 site_info = st.container()
+multi_select = st.container()
 home = st.container()
-trends = st.container()
+
 no_inform = st.container()
 
 with site_info:
     st.subheader('Fuel Filling Summary')
     a,b,c,d = st.columns(4)
     with a:
-        st.metric('Normal CPH', f"100", "1.2",border=True)
+        #last filling liter of archor
+        fill_liter = get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['Filling Liters'].iloc[-1]
+        st.metric('Last Filling L', f"{fill_liter:,}", border=True)
     with b:
-        st.metric('Last Filling L', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}", border=True)
+        #last Nominal of archor
+        fill_liter = get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['Nominal '].iloc[-1]
+        st.metric('Nominal', f"{fill_liter:,}", border=True)
     with c:
-        st.metric('Average CPH Status', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['status'].mean():.2f}","-2.5", border=True)
+        #last Actual of archor
+        fill_liter = get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['Year'].isin(yselection))]['Actual CPH'].iloc[-1]
+        st.metric('Actual CPH', f"{fill_liter:,}", border=True)
     with d:
         st.metric('No Inform Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['inform'] == 1) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}", border=True)
 
+with multi_select:
+    st.subheader('Select Columns to Display')
+    columns = st.multiselect('Select Columns', get_dataset().columns.tolist(), default=get_dataset().columns.tolist())
 
 with home:
     st.subheader('Hight CPH Report')
     data = get_dataset()
     filtered_data = data[(data['Anchor ID'] == anchor_selection) & (data['Year'].isin(yselection))]
     status_high = filtered_data[filtered_data['status'] > 0.5]
-    st.dataframe(status_high[['Anchor ID','Team Leader','Filling Date','Filling Liters', 'status']])
+    st.dataframe(status_high[columns])
+    # st.dataframe(status_high[['Anchor ID','Team Leader','Filling Date','Filling Liters', 'Actual CPH', 'DGRH Difference' , 'KWH Difference', 'KWH/HR', 'DGRH/day', 'Nominal ', 'status']])
        
 
-
 with no_inform:
-    col1,col2, col3 = st.columns(3)
+    col1,col2 = st.columns(2)
     with col1:
         st.subheader('No Inform Cases')
         no_inform_data = data[(data['inform'] == 1) &  (data['Year'].isin(yselection)) & (data['Anchor ID'] == anchor_selection)]
@@ -101,18 +100,23 @@ with no_inform:
         st.subheader('CPH High')
         cph_high = data[(data['status'] > 0.5) &  (data['Year'].isin(yselection)) & (data['Anchor ID'] == anchor_selection)]
         st.dataframe(cph_high[['Filling Date','Anchor ID', 'status']])
-    with col3:
-        st.subheader('No Inform & CPH High')
-        no_inform_cph_high = data[(data['inform'] == 1) & (data['status'] > 0) &  (data['Year'].isin(yselection)) & (data['Anchor ID'] == anchor_selection)]
-        st.dataframe(no_inform_cph_high[['Filling Date','Anchor ID', 'status']])
+    
+# with trends:
+#     st.subheader('Trends of CPH Status Over')
+#     trend_data = data[(data['Anchor ID'] == anchor_selection) & (data['Year'].isin(yselection))]
+#     trend_data = trend_data.sort_values(by='Filling Date')
+#     fig = go.Figure()
+#     fig.add_trace(go.Scatter(x=trend_data['Filling Date'], y=trend_data['status'], mode='lines+markers', name='CPH Status'))
+#     fig.update_layout(title='CPH Status Over', xaxis_title='Filling Date', yaxis_title='CPH Status')
+#     st.plotly_chart(fig, use_container_width=True)
 
-with trends:
-    st.subheader('Trends of CPH Status Over')
-    trend_data = data[(data['Anchor ID'] == anchor_selection) & (data['Year'].isin(yselection))]
-    trend_data = trend_data.sort_values(by='Filling Date')
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=trend_data['Filling Date'], y=trend_data['status'], mode='lines+markers', name='CPH Status'))
-    fig.update_layout(title='CPH Status Over', xaxis_title='Filling Date', yaxis_title='CPH Status')
-    st.plotly_chart(fig, use_container_width=True)
+
+
+
+
+
+
+
+
     
     
