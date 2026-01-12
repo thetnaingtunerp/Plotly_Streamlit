@@ -77,7 +77,6 @@ with site_info:
         st.metric('No Inform Cases', f"{get_dataset()[(get_dataset()['Anchor ID'] == anchor_selection) & (get_dataset()['inform'] == 1) & (get_dataset()['Year'].isin(yselection))].shape[0]:,}", border=True)
 
 with multi_select:
-    st.subheader('Select Columns to Display')
     columns = st.multiselect('Select Columns', get_dataset().columns.tolist(), default=get_dataset().columns.tolist())
 
 with home:
@@ -101,14 +100,6 @@ with no_inform:
         cph_high = data[(data['status'] > 0.5) &  (data['Year'].isin(yselection)) & (data['Anchor ID'] == anchor_selection)]
         st.dataframe(cph_high[['Filling Date','Anchor ID', 'status']])
     
-# with trends:
-#     st.subheader('Trends of CPH Status Over')
-#     trend_data = data[(data['Anchor ID'] == anchor_selection) & (data['Year'].isin(yselection))]
-#     trend_data = trend_data.sort_values(by='Filling Date')
-#     fig = go.Figure()
-#     fig.add_trace(go.Scatter(x=trend_data['Filling Date'], y=trend_data['status'], mode='lines+markers', name='CPH Status'))
-#     fig.update_layout(title='CPH Status Over', xaxis_title='Filling Date', yaxis_title='CPH Status')
-#     st.plotly_chart(fig, use_container_width=True)
 
 
 
