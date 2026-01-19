@@ -40,7 +40,7 @@ gb = GridOptionsBuilder.from_dataframe(filtered_df)
 
 # Configure default columns
 gb.configure_default_column(
-    min_column_width=100,
+    min_column_width=10,
     resizable=True,
     filterable=True,
     sortable=True,
@@ -50,14 +50,14 @@ gb.configure_default_column(
 
 # Configure pagination
 gb.configure_pagination(
-    paginationPageSize=25,
+    paginationPageSize=10,
     paginationAutoPageSize=False
 )
 
 # Configure selection
 gb.configure_selection(
     selection_mode='multiple',
-    use_checkbox=True,
+    use_checkbox=False,
     rowMultiSelectWithClick=True,
     suppressRowDeselection=False
 )
